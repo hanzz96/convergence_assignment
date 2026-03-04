@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Exceptions\Api\ErrorException;
 use App\Services\StrapiServices;
+use App\Models\Subscription;
+use Carbon\Carbon;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -38,10 +40,21 @@ class ContentController extends Controller
                 return response()->json(['message' => 'Content not found'], 404);
             }
 
+            $userId = $request->user()->id;
             // Premium check
-            if ($content['attributes']['is_premium'] ?? false) {
+            if ($content['is_premium'] ?? false) {
                 $user = auth()->user();
-                if (!$user || !$user->subscription || $user->subscription->plan !== 'premium') {
+                
+                if (!$user) {
+                    return response()->json(['message' => 'Premium subscription required'], 403);
+                }
+
+                $subscription = Subscription::where('user_id', $userId)
+                    ->where('plan', 'premium')
+                    ->where('expires_at', '>', Carbon::now())
+                    ->first();
+
+                if (!$subscription) {
                     return response()->json(['message' => 'Premium subscription required'], 403);
                 }
             }
