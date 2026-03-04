@@ -38,7 +38,7 @@ class StrapiServices
             // dd($response,'response');
             // dd($body, 'body');
             if ($httpCode == 200) {
-                // Redis::setex($cacheKey, 60, json_encode($body));
+                Redis::setex($cacheKey, 60, json_encode($body));
                 return $body;
             } else if ($httpCode >= 400 && $httpCode <= 600) {
                 //we can do mapping here
