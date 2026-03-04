@@ -6,9 +6,6 @@ use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Throwable;
-use Exception;
-use ErrorException;
 
 function handleInternalServerError(Throwable $e)
 {
