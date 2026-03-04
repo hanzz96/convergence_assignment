@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Libraries\Api\Strapi\StrapiApi;
+use App\Services\StrapiServices;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -11,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+         $this->app->singleton(StrapiServices::class, function ($app) {
+            return new StrapiServices(new StrapiApi());
+        });
     }
 
     /**
