@@ -21,7 +21,6 @@ class ContentController extends Controller
     public function index(Request $request)
     {
         try {
-            throw new ErrorException("aaa");
             $contents = $this->strapi->getContents();
             return response()->json($contents);
         } catch (\Exception $e) {
