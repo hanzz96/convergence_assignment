@@ -4,7 +4,6 @@ namespace App\Libraries\Api\Strapi;
 
 use App\Libraries\Api\BaseApi;
 use App\Libraries\StrapiQueryBuilder;
-use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 
 class StrapiApi extends BaseApi

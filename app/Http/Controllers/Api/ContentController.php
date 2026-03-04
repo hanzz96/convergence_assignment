@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Exceptions\Api\ErrorException;
 use App\Services\StrapiServices;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 
 class ContentController extends Controller
@@ -19,6 +21,7 @@ class ContentController extends Controller
     public function index(Request $request)
     {
         try {
+            throw new ErrorException("aaa");
             $contents = $this->strapi->getContents();
             return response()->json($contents);
         } catch (\Exception $e) {

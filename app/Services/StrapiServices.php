@@ -2,10 +2,12 @@
 
 namespace App\Services;
 
+use App\Http\Exceptions\Api\ErrorException;
 use Illuminate\Support\Facades\Redis;
 use App\Libraries\Api\Strapi\StrapiApi;
 use App\Libraries\StrapiQueryBuilder;
 use Exception;
+use GuzzleHttp\Exception\ConnectException;
 
 class StrapiServices
 {
@@ -36,20 +38,13 @@ class StrapiServices
             // dd($response,'response');
             // dd($body, 'body');
             if ($httpCode == 200) {
-                Redis::setex($cacheKey, 60, json_encode($body));
+                // Redis::setex($cacheKey, 60, json_encode($body));
                 return $body;
             } else if ($httpCode >= 400 && $httpCode <= 600) {
-                // if (\property_exists($body, 'ErrorCode')) {
-                //     $this->errorCheck($body->ErrorCode);
-                // }
-
-                // if (\property_exists($body, 'error_code')) {
-                //     $this->errorCheck($body->error_code);
-                // }
-
-                throw new Exception('api_strapi_error');
+                //we can do mapping here
+                throw new ErrorException('api_strapi_error');
             } else {
-                throw new Exception('api_strapi_error_critical');
+                throw new ErrorException('api_strapi_error_critical');
             }
         } catch (\Exception $e) {
             throw $e;
