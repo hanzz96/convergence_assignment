@@ -34,9 +34,8 @@ class StrapiServices
             $response = $this->api->getContents($strapiQueryBuilder);
 
             $httpCode = $response->getStatusCode();
-            $body = json_decode($response->getBody()->__toString());
-            // dd($response,'response');
-            // dd($body, 'body');
+            $body = json_decode($response->getBody()->__toString(), true);
+
             if ($httpCode == 200) {
                 Redis::setex($cacheKey, 60, json_encode($body));
                 return $body;
@@ -51,7 +50,7 @@ class StrapiServices
         }
     }
 
-    public function getContentById(int $id)
+    public function getContentById(string $id)
     {
         try {
 
@@ -66,7 +65,7 @@ class StrapiServices
             $response = $this->api->getContentById($id);
 
             $httpCode = $response->getStatusCode();
-            $body = json_decode($response->getBody()->__toString());
+            $body = json_decode($response->getBody()->__toString(), true);
 
             if ($httpCode == 200) {
                 Redis::setex($cacheKey, 60, json_encode($body));

@@ -30,14 +30,17 @@ class StrapiApi extends BaseApi
         return $response;
     }
 
-    public function getContentById(int $id, ?StrapiQueryBuilder $strapiQuery = null)
+    public function getContentById(string $id, ?StrapiQueryBuilder $strapiQuery = null)
     {
         $url = "articles/{$id}";
-        $response = $this->guzzleClient->get($url, [
-            RequestOptions::HEADERS => $this->composeHeaders($this->apiConfig->apiKey),
-            RequestOptions::QUERY => $strapiQuery->toArray() ?? []
-        ]);
-
+        $response = $this->guzzleClient->request(
+            'GET',
+            $url,
+            [
+                RequestOptions::HEADERS => $this->composeHeaders($this->apiConfig->apiKey),
+                RequestOptions::QUERY => $strapiQuery ? $strapiQuery->toArray() : []
+            ]
+        );
         return $response;
     }
 

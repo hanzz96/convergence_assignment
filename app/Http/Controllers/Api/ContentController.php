@@ -31,7 +31,7 @@ class ContentController extends Controller
     }
 
     // Get single content by ID
-    public function show(Request $request, $id)
+    public function show(Request $request, string $id)
     {
         try {
             $content = $this->strapi->getContentById($id);
@@ -40,13 +40,14 @@ class ContentController extends Controller
                 return response()->json(['message' => 'Content not found'], 404);
             }
 
-            $userId = $request->user()->id;
             // Premium check
-            if ($content['is_premium'] ?? false) {
-                $user = auth()->user();
-                
+            if ($content['data']['is_premium'] ?? false) {
+
+                $user = $request->user();
+                $userId = $user->id;
+
                 if (!$user) {
-                    return response()->json(['message' => 'Premium subscription required'], 403);
+                    throw new ErrorException('Premium subscription required', 403);
                 }
 
                 $subscription = Subscription::where('user_id', $userId)
@@ -55,7 +56,7 @@ class ContentController extends Controller
                     ->first();
 
                 if (!$subscription) {
-                    return response()->json(['message' => 'Premium subscription required'], 403);
+                    throw new ErrorException('Premium subscription required', 403);
                 }
             }
 
