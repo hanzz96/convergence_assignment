@@ -8,7 +8,7 @@ use App\Services\StrapiServices;
 use App\Models\Subscription;
 use Carbon\Carbon;
 use Exception;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class ContentController extends Controller
 {
@@ -23,7 +23,9 @@ class ContentController extends Controller
     public function index(Request $request)
     {
         try {
-            $contents = $this->strapi->getContents();
+            $perPage = $request->query('per_page', 1); // default 10
+            $page = $request->query('page', 1); // default 1
+            $contents = $this->strapi->getContents($page, $perPage);
             return response()->json($contents);
         } catch (\Exception $e) {
             throw $e;

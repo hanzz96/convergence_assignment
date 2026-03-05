@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Redis;
 use App\Libraries\Api\Strapi\StrapiApi;
 use App\Libraries\StrapiQueryBuilder;
 use Exception;
-use GuzzleHttp\Exception\ConnectException;
 
 class StrapiServices
 {
@@ -21,7 +20,8 @@ class StrapiServices
     public function getContents(int $page = 1, int $perPage = 10)
     {
         try {
-            $cacheKey = "strapi_contents_page_{$page}";
+            
+            $cacheKey = "strapi_contents_page_{$page}_{$perPage}";
 
             $cached = Redis::get($cacheKey);
 
@@ -30,14 +30,14 @@ class StrapiServices
             }
 
             $strapiQueryBuilder = new StrapiQueryBuilder();
-
+            $strapiQueryBuilder->pagination($page, $perPage);
             $response = $this->api->getContents($strapiQueryBuilder);
 
             $httpCode = $response->getStatusCode();
             $body = json_decode($response->getBody()->__toString(), true);
 
             if ($httpCode == 200) {
-                Redis::setex($cacheKey, 60, json_encode($body));
+                Redis::setex($cacheKey, 30, json_encode($body));
                 return $body;
             } else if ($httpCode >= 400 && $httpCode <= 600) {
                 //we can do mapping here
@@ -68,7 +68,7 @@ class StrapiServices
             $body = json_decode($response->getBody()->__toString(), true);
 
             if ($httpCode == 200) {
-                Redis::setex($cacheKey, 60, json_encode($body));
+                Redis::setex($cacheKey, 30, json_encode($body));
                 return $body;
             } else if ($httpCode >= 400 && $httpCode <= 600) {
                 throw new Exception('api_strapi_error');
