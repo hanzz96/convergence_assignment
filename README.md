@@ -65,7 +65,7 @@ CACHE_STORE=redis
 
 # Strapi CMS
 STRAPI_URL=https://amazing-art-61fcfda17b.strapiapp.com/api/
-STRAPI_API_KEY=your_api_key_in_pdf_file
+STRAPI_API_KEY=your_api_key_in_txt_file
 ```
 ## 4.Run Migrations
 Migrate the database tables:
