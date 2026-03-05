@@ -1,5 +1,15 @@
 # Requirement for Assignment Interview
 
+## Importing API Requests
+
+To test or explore the API endpoints, you can import the provided API request collection:
+
+- The file is named: **Insomnia_2026-03-05.har**
+- This file can be imported into **Postman** or **Insomnia** to quickly load all pre-configured API requests.
+- Once imported, you can run requests, view example responses, and test authentication flows.
+
+> 💡 Note: Ensure you have the necessary API keys or credentials configured after import.
+
 ## Setup Instructions
 
 ## Prerequisites
