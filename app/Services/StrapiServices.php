@@ -61,8 +61,9 @@ class StrapiServices
             if ($cached) {
                 return json_decode($cached, true);
             }
-
-            $response = $this->api->getContentById($id);
+            $strapiQueryBuilder = new StrapiQueryBuilder();
+            $strapiQueryBuilder->populate('blocks', ['populate' => '*']);
+            $response = $this->api->getContentById($id, $strapiQueryBuilder);
 
             $httpCode = $response->getStatusCode();
             $body = json_decode($response->getBody()->__toString(), true);
