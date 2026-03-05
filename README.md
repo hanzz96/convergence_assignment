@@ -196,4 +196,10 @@ In a production scenario, both applications could either **share a single databa
 
 ### Example Response List Content Strapi API
 This API will call to Strapi API and will cache the response for 30s
+- List Content
+
 ![alt text](image.png)
+
+- Content Detail
+
+![alt text](image-1.png)
