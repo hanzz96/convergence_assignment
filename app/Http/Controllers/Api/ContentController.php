@@ -23,7 +23,7 @@ class ContentController extends Controller
     public function index(Request $request)
     {
         try {
-            $perPage = $request->query('per_page', 1); // default 10
+            $perPage = $request->query('per_page', 5); // default 10
             $page = $request->query('page', 1); // default 1
             $contents = $this->strapi->getContents($page, $perPage);
             return response()->json($contents);
