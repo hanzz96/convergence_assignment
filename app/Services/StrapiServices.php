@@ -30,7 +30,7 @@ class StrapiServices
             }
 
             $strapiQueryBuilder = new StrapiQueryBuilder();
-            $strapiQueryBuilder->pagination($page, $perPage);
+            $strapiQueryBuilder->pagination($page, $perPage)->populate('blocks', ['populate' => '*']);
             $response = $this->api->getContents($strapiQueryBuilder);
 
             $httpCode = $response->getStatusCode();
