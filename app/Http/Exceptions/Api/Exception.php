@@ -2,8 +2,11 @@
 
 namespace App\Http\Exceptions\Api;
 
-use App\Entities\Headers;
-
+/**
+ * @todo
+ * 
+ * we can use wrapper class custom exception for scaling the report logger
+ */
 abstract class Exception extends \RuntimeException
 {
   /**
@@ -44,7 +47,7 @@ abstract class Exception extends \RuntimeException
   ) {
     $request = request();
 
-    $this->logMessage = $request->method() . ' ' . $request->url() . ' ' . $request->header(Headers::X_REQUEST_ID);
+    $this->logMessage = $request->method() . ' ' . $request->url();
     $this->statusCode = $statusCode;
     $this->message = $message;
     $this->headers = $headers;
