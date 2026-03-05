@@ -193,3 +193,7 @@ In a production scenario, both applications could either **share a single databa
 - Use **Postman or automated tests** to validate all endpoints.  
 
 ---
+
+### Example Response List Content Strapi API
+This API will call to Strapi API and will cache the response for 30s
+![alt text](image.png)
