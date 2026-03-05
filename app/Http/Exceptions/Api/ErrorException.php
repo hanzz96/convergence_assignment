@@ -14,9 +14,10 @@ class ErrorException extends \Exception
    * 
    * @return void
    */
-  public function __construct(string $message)
+  public function __construct(string $message, int $code = 400)
   {
     $this->message = $message;
+    $this->code = $code;
   }
 
 }
