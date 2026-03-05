@@ -44,12 +44,12 @@ return Application::configure(basePath: dirname(__DIR__))
 
             if ($e instanceof ApiErrorException) {
                 return response()->json([
-                    'code' => 400,
+                    'code' => $e->getCode(),
                     'message' => $e->getMessage(),
                     'trace' => config('app.debug')
                         ? collect($e->getTrace())->take(5)
                         : null,
-                ], 400);
+                ], $e->getCode());
             } else if ($e instanceof ValidationException) {
                 return response()->json([
                     'code' => 422,
